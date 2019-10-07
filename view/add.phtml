@@ -1,0 +1,26 @@
+<html>
+<?php include_once 'view/html_head';?>
+<body>
+<h1>login</h1>
+<form method='post'>
+	<p>
+	User name: <input name="username" type="text" value="<?=$username;?>">
+	</p>
+	<p>
+	Email: <input name="email" type="text" value="<?=$email;?>">
+	</p>
+	<p>
+	Task: <br>
+	<textarea name="task"><?=$text;?></textarea>
+	</p>
+	<p>
+	<input name="submit" type="submit" value="send task">
+	</p> 
+</form>
+<?php foreach ($message as $msg) : ?>
+	<p style="color:red">
+    	<?=$msg;?>
+	</p>
+<?php endforeach;?>
+</body>
+</html>

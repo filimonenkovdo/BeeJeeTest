@@ -1,0 +1,22 @@
+<html>
+<?php include_once 'view/html_head';?>
+<body>
+<h1>login</h1>
+<form method='post'>
+	<p>
+	User name: <input name="login" type="text" value="<?=$login;?>">
+	</p>
+	<p>
+	Password: <input name="pwd" type="password">
+	</p>
+	<p>
+	<input name="submit" type="submit" value="send data">
+	</p> 
+</form>
+<?php if ($msg) : ?>
+	<p style="color:red">
+    	<?=$msg;?>
+	</p>
+<?php endif;?>
+</body>
+</html>
