@@ -1,4 +1,8 @@
 <?php
+/**
+ * login controller
+ * Redirect to main page when success
+ */
 
 $login = '';
 $msg = '';

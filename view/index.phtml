@@ -1,0 +1,128 @@
+<html>
+<?php include_once 'view/html_head.phtml';?>
+
+<body>
+
+<p>
+<?php if (isset($_COOKIE['cv']) && ($_COOKIE['cv']==md5('AdministrAtor'))) : ?>
+<a href="logout.php">Logout</a>
+<?php else : ?>
+<a href="/login.php">Login</a>
+<?php endif;?>
+</p>
+
+
+<h1>Task list</h1>
+
+<table>
+    <thead>
+        <tr>
+            <td>
+                <?php if ($sort == 'username') : ?>
+                <b>User</b>
+                <?php else : ?>
+                <a href="/index.php?sort=username">User</a>
+                <?php endif;?>
+            </td>
+            <td>
+                <?php if ($sort == 'email') : ?>
+                <b>Email</b>
+                <?php else : ?>
+                <a href="/index.php?sort=email">Email</a>
+                <?php endif;?>
+            </td>
+            <td>
+            Task
+            </td>
+            <td>
+            Modified?
+            </td>
+            <td>
+                <?php if ($sort == 'solved') : ?>
+                <b>Status</b>
+                <?php else : ?>
+                <a href="/index.php?sort=solved">Status</a>
+                <?php endif;?>
+            </td>
+            <?php if (isset($_COOKIE['cv']) && ($_COOKIE['cv']==md5('AdministrAtor'))) : ?>
+            <td>
+                Edit?
+            </td>
+            <td>
+            </td>
+            <?php endif;?>
+        </tr>
+        </thead>
+    <tbody>
+        <?php foreach ($list as $task) : ?>
+        <tr>
+            <td>
+                <?= $task->getUserName();?>
+            </td>
+            <td>
+                <?= $task->getEmail();?>
+            </td>
+            <td>
+                <?= htmlentities($task->getText());?>
+            </td>
+            <td>
+                <?= $task->getModified() ? 'Yes' : '';?>
+            </td>
+            <td>
+                <?= $task->getSolved() ? 'Solved' : 'Not solved';?>
+            </td>
+            <?php if (isset($_COOKIE['cv']) && ($_COOKIE['cv']==md5('AdministrAtor'))) : ?>
+            <td>
+                <a href="/edit.php?id=<?=$task->getId();?>">edit</a>
+            </td>
+            <td>
+                <?php if (!$task->getSolved()) : ?>
+                <button class="mark-as-solved" data-id="<?=$task->getId();?>">Mark as solved</button>
+                <?php endif;?>
+            </td>
+            <?php endif;?>
+        </tr>
+        <?php endforeach;?>
+    </tbody>
+</table>
+
+<?php /* paginator */ ?>
+<?php if ($pages > 1) :?>
+    <?php for ($p = 1; $p <= $pages; $p++) : ?>
+        <span>
+        <?php if ($p == $page) : ?>
+            <?=$p;?>
+        <?php else : ?>
+            <a href="/index.php?page=<?=$p?><?=$sort ? '&sort=' . $sort : '';?>"><?=$p?></a>
+        <?php endif;?>
+        </span>
+    <?php endfor;?>
+    <?php ?>
+<?php endif;?>
+
+
+
+
+<p>
+<a href="/add.php">Add task</a>
+</p>
+
+<style>
+td {
+   min-width: 160px;
+}
+</style>
+<?php if (isset($_COOKIE['cv']) && ($_COOKIE['cv']==md5('AdministrAtor'))) : ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+$('.mark-as-solved').on('click', function(){
+	id = $(this).attr('data-id');
+	$.post('/mark.php', {id : id}, function(){
+		location.reload(true);
+	});
+});
+</script>
+<?php endif;?>
+</body>
+</html>

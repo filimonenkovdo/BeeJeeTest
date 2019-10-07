@@ -1,14 +1,18 @@
 <?php
-    include 'model/Task.php';
+/**
+ * index controller
+ * main page. Consist a list of task
+ */
+include 'model/Task.php';
 
 $cnt = Task::countTask();
 $perPage = 3; // tasks on page
 $taskOnLastPage = $cnt % $perPage;
-$pages = $taskOnLastPage > 0 ? ($cnt - $taskOnLastPage) / $perPage + 1 : $cnt / $perPage;    
+$pages = $taskOnLastPage > 0 ? ($cnt - $taskOnLastPage) / $perPage + 1 : $cnt / $perPage;
 
 if (isset($_GET['page'])) {
 	$page = intval($_GET['page']);
-} else { 
+} else {
     $page = 1;
 }
 
@@ -19,49 +23,16 @@ if ($page <= 0) {
 if ($page > $pages) {
 	$page = $pages;
 }
-$list = Task::tasks($perPage, ($page - 1) * $perPage);
+
+$sort = '';
+if(isset($_GET['sort'])) {
+    if (in_array($_GET['sort'], ['username', 'email', 'solved'])) {
+        $sort = $_GET['sort'];
+    }
+}
+
+$list = Task::tasks($sort, $perPage, ($page - 1) * $perPage);
+
+include "view/index.phtml";
 ?>
 
-<html>
-<?php include_once 'view/html_head';?>
-<body>
-<table>
-<thead>
-<tr>
-<td>User</td>
-<td>Email</td>
-<td>Task</td>
-<td>Modified?</td>
-<td>Status</td>
-</tr>
-</thead>
-<tbody>
-<?php foreach ($list as $task) : ?>
-<tr>
-<td><?= $task->getUserName();?></td>
-<td><?= $task->getEmail();?></td>
-<td><?= htmlentities($task->getText());?></td>
-<td><?= $task->getModified() ? 'Yes' : '';?></td>
-<td><?= $task->getSolved() ? 'Solved' : 'Not solved';?></td>
-</tr>
-<?php endforeach;?>
-</tbody>
-</table>
-
-<?php /* paginator */ ?>
-
-
-
-
-<p>
-<a href="/add.php">Add task</a>
-</p>
-<p>
-<?php if (isset($_COOKIE['cv']) && ($_COOKIE['cv']==md5('AdministrAtor'))) : ?>
-<a href="logout.php">Logout</a>
-<?php else : ?>
-<a href="/login.php">Login as administrator</a>
-<?php endif;?>
-</p>
-</body>
-</html>

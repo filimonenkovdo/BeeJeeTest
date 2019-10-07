@@ -1,22 +1,25 @@
 <html>
-<?php include_once 'view/html_head';?>
+<?php include_once 'view/html_head.phtml';?>
 <body>
 <h1>login</h1>
 <form method='post'>
 	<p>
-	User name: <input name="login" type="text" value="<?=$login;?>">
+	User name:<br><input name="login" type="text" value="<?=$login;?>">
 	</p>
 	<p>
-	Password: <input name="pwd" type="password">
+	Password:<br><input name="pwd" type="password">
 	</p>
 	<p>
 	<input name="submit" type="submit" value="send data">
-	</p> 
+	</p>
 </form>
 <?php if ($msg) : ?>
 	<p style="color:red">
     	<?=$msg;?>
 	</p>
 <?php endif;?>
+<p>
+<a href="/index.php">Return to main page</a>
+</p>
 </body>
 </html>

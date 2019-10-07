@@ -1,26 +1,29 @@
 <html>
-<?php include_once 'view/html_head';?>
+<?php include_once 'view/html_head.phtml';?>
 <body>
-<h1>login</h1>
+<h1>Task create</h1>
 <form method='post'>
 	<p>
-	User name: <input name="username" type="text" value="<?=$username;?>">
+	User name:<br><input name="username" type="text" value="<?=$username;?>">
 	</p>
 	<p>
-	Email: <input name="email" type="text" value="<?=$email;?>">
+	Email:<br><input name="email" type="text" value="<?=$email;?>">
 	</p>
 	<p>
 	Task: <br>
-	<textarea name="task"><?=$text;?></textarea>
+	<textarea name="task" cols="80" rows="5"><?=$text;?></textarea>
 	</p>
 	<p>
 	<input name="submit" type="submit" value="send task">
-	</p> 
+	</p>
 </form>
 <?php foreach ($message as $msg) : ?>
 	<p style="color:red">
     	<?=$msg;?>
 	</p>
 <?php endforeach;?>
+<p>
+<a href="/index.php">Return to main page</a>
+</p>
 </body>
 </html>

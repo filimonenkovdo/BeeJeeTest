@@ -1,0 +1,29 @@
+<html>
+<?php include_once 'view/html_head.phtml';?>
+<body>
+<h1>Task edit</h1>
+<form method='post'>
+    <p>
+    User name: <?=$task->getUsername();?>
+    </p>
+    <p>
+    Email: <?=$task->getEmail();?>
+    </p>
+    <p>
+    Task: <br>
+    <textarea name="task" cols="80" rows="5"><?=$task->getText();?></textarea>
+    </p>
+    <p>
+    <input name="submit" type="submit" value="send task">
+    </p>
+</form>
+<?php if ($message) : ?>
+	<p style="color:red">
+    	<?=$message;?>
+	</p>
+<?php endif;?>
+<p>
+<a href="/index.php">Return to main page</a>
+</p>
+</body>
+</html>
