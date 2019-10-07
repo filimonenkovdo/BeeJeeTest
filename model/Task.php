@@ -50,7 +50,7 @@ class Task
     {
         include 'config.php';
         if (!self::$pdo) {
-            self::$pdo = new \PDO('mysql:host=127.0.0.1;dbname=BeeJeeTest', $config['user'], $config['password']);
+            self::$pdo = new \PDO('mysql:host=127.0.0.1;dbname=' . $config['dbname'], $config['user'], $config['password']);
             if (!self::$pdo) {
                 echo 'No database connection';
                 exit;
